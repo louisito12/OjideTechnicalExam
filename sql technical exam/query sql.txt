@@ -1,0 +1,28 @@
+
+
+
+
+
+
+1.SELECT Artist, COUNT(*) AS TotalAlbums FROM data_reference__album_sales_ GROUP BY Artist;
+
+
+2. SELECT Artist, SUM(Sales) AS TotalAlbums FROM data_reference__album_sales_ GROUP BY Artist;
+
+
+
+3. SELECT Artist, SUM(Sales) AS TotalSales 
+FROM data_reference__album_sales_  
+GROUP BY Artist  
+ORDER BY TotalSales DESC  
+LIMIT 1;
+
+
+4. SELECT Album,`Date_Released`, Sales FROM ( SELECT Album, `Date_Released`, Sales, ROW_NUMBER() OVER (PARTITION BY YEAR(`Date_Released`)
+ ORDER BY Sales DESC) AS rank FROM data_reference__album_sales_ ) AS sub WHERE rank <= 10 ORDER BY YEAR(`Date_Released`), Sales DESC;
+
+
+
+5. SELECT Artist, GROUP_CONCAT(DISTINCT Album ORDER BY Album SEPARATOR ', ') AS AlbumList FROM data_reference__album_sales_ GROUP BY Artist;
+
+
